@@ -1,72 +1,36 @@
-using System;
-
 class Program
 {
     static void Main(string[] args)
     {
         List<Video> videos = new List<Video>();
 
-        while (true)
+        // list of videos that I select
+        Video video1 = new Video("Ice Cream", "Blackpink", 180);
+        video1.AddComment("Byron", "XD!");
+        video1.AddComment("Bob", "nice song :D");
+        video1.AddComment("Carlos", "Diaj Reggaeton music is better.");
+
+        Video video2 = new Video("SOS", "Jonas Brothers", 455);
+        video2.AddComment("Dave", "What a song!");
+        video2.AddComment("Eve", "I remembered my childhood :,)");
+        
+        Video video3 = new Video("Making code with Python", "Tom York", 245);
+        video3.AddComment("Frank", "Loving python!");
+        video3.AddComment("Grace", "I cant believe that Python is more friendly than C#");
+
+
+        videos.Add(video1);
+        videos.Add(video2);
+        videos.Add(video3);
+
+        foreach (var video in videos)
         {
-            Console.WriteLine("Welcome to Youtube Tracker Program!");
-            Console.WriteLine("1. Add Video");
-            Console.WriteLine("2. Add Comment to Video");
-            Console.WriteLine("3. Show Comments for Video");
-            Console.WriteLine("4. Exit");
-            Console.Write("Choose an option: ");
-            string choice = Console.ReadLine();
-
-            if (choice == "1")
-            {
-                Console.Write("Enter video title: ");
-                string title = Console.ReadLine();
-                videos.Add(new Video(title));
-                Console.WriteLine("Video added!");
-            }
-            else if (choice == "2")
-            {
-                Console.Write("Enter video title to add comment: ");
-                string videoTitle = Console.ReadLine();
-                Video video = videos.Find(v => v.Title.Equals(videoTitle, StringComparison.OrdinalIgnoreCase));
-
-                if (video != null)
-                {
-                    Console.Write("Enter your name: ");
-                    string author = Console.ReadLine();
-                    Console.Write("Enter your comment: ");
-                    string text = Console.ReadLine();
-                    video.AddComment(author, text);
-                    Console.WriteLine("Comment added!");
-                }
-                else
-                {
-                    Console.WriteLine("Video not found!");
-                }
-            }
-            else if (choice == "3")
-            {
-                Console.Write("Enter video title to show comments: ");
-                string videoTitle = Console.ReadLine();
-                Video video = videos.Find(v => v.Title.Equals(videoTitle, StringComparison.OrdinalIgnoreCase));
-
-                if (video != null)
-                {
-                    video.ShowComments();
-                }
-                else
-                {
-                    Console.WriteLine("Video not found!");
-                }
-            }
-            else if (choice == "4")
-            {
-                Console.WriteLine("Bye, see you later! :)");
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Invalid option. Please try again.");
-            }
+            Console.WriteLine($"Title: {video.Title}");
+            Console.WriteLine($"Author: {video.Author}");
+            Console.WriteLine($"Length: {video.Length} seconds");
+            Console.WriteLine($"Number of Comments: {video.GetNumberOfComments()}");
+            Console.WriteLine("Comments:");
+            video.ShowComments();
             Console.WriteLine();
         }
     }
