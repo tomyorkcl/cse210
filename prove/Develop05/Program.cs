@@ -4,6 +4,44 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop05 World!");
+        BaseActivity breathingActivity = new BreathingActivity();
+        BaseActivity reflectionActivity = new ReflectionActivity();
+        BaseActivity listingActivity = new ListingActivity();
+
+        while (true)
+        {
+            Console.WriteLine("Menu Options: ");
+            Console.WriteLine("");
+            Console.WriteLine("  1. Breathing Activity");
+            Console.WriteLine("  2. Reflection Activity");
+            Console.WriteLine("  3. Listing Activity");
+            Console.WriteLine("  4. Quit");
+            Console.WriteLine("");
+            Console.WriteLine("Select a choice from the menu: ");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    breathingActivity.StartActivity();
+                    breathingActivity.PerformActivity();
+                    break;
+                case 2:
+                    reflectionActivity.StartActivity();
+                    reflectionActivity.PerformActivity();
+                    break;
+                case 3:
+                    listingActivity.StartActivity();
+                    listingActivity.PerformActivity();
+                    break;
+                case 4:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please select again.");
+                    break;
+            }
+        }
     }
 }
