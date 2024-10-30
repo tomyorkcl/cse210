@@ -1,10 +1,23 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 
-public class Goal
+public abstract class Goal
 {
-    public string ShortName { get; set; }
-    public string Description { get; set; }
-    public int Points { get; set; }
+    protected string shortName;
+    protected string description;
+    protected int points;
 
-    public virtual void MarkCompleted() { }
+    public string ShortName => shortName;
+    public string Description => description;
+    public int Points => points;
+
+    protected Goal(string name, string description, int points)
+    {
+        shortName = name;
+        this.description = description;
+        this.points = points;
+    }
+
+    public abstract void MarkCompleted();
 }

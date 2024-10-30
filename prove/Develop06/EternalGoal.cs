@@ -1,9 +1,7 @@
 public class EternalGoal : Goal
 {
     public EternalGoal(string name, string description, int points)
-    {
-        ShortName = name;
-        Description = description;
-        Points = points;
-    }
+        : base(name, description, points) { }
+
+    public override void MarkCompleted() { }
 }

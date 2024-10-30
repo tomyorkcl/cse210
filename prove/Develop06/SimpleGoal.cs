@@ -1,17 +1,18 @@
+
 public class SimpleGoal : Goal
 {
-    public bool IsComplete { get; set; }
+    private bool isComplete;
+
+    public bool IsComplete => isComplete;
 
     public SimpleGoal(string name, string description, int points)
+        : base(name, description, points)
     {
-        ShortName = name;
-        Description = description;
-        Points = points;
-        IsComplete = false;
+        isComplete = false;
     }
 
     public override void MarkCompleted()
     {
-        IsComplete = true;
+        isComplete = true;
     }
 }

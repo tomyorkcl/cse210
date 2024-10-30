@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 public class GoalManager
 {
@@ -40,7 +37,7 @@ public class GoalManager
         }
     }
 
-    static void DisplayMenu()
+    private static void DisplayMenu()
     {
         Console.WriteLine($"You have {userScore} points\n");
         Console.WriteLine("Menu Options:");
@@ -53,7 +50,7 @@ public class GoalManager
         Console.Write("Select a choice from the menu: ");
     }
 
-    static void CreateGoal()
+    private static void CreateGoal()
     {
         Console.WriteLine("Which type of goal would you like to create?");
         Console.WriteLine("  1. Simple Goal\n  2. Eternal Goal\n  3. Checklist Goal");
@@ -68,27 +65,13 @@ public class GoalManager
         Console.WriteLine("What is the amount of points associated with this goal?");
         int points = Convert.ToInt32(Console.ReadLine());
 
-        Goal newGoal = null;
-
-        switch (typeChoice)
+        Goal newGoal = typeChoice switch
         {
-            case 1:
-                newGoal = new SimpleGoal(name, description, points);
-                break;
-            case 2:
-                newGoal = new EternalGoal(name, description, points);
-                break;
-            case 3:
-                Console.WriteLine("What is the target amount for this checklist goal?");
-                int target = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("What is the bonus points for completing this goal?");
-                int bonus = Convert.ToInt32(Console.ReadLine());
-                newGoal = new ChecklistGoal(name, description, points, target, bonus);
-                break;
-            default:
-                Console.WriteLine("Invalid choice!");
-                break;
-        }
+            1 => new SimpleGoal(name, description, points),
+            2 => new EternalGoal(name, description, points),
+            3 => CreateChecklistGoal(name, description, points),
+            _ => null
+        };
 
         if (newGoal != null)
         {
@@ -97,7 +80,16 @@ public class GoalManager
         }
     }
 
-    static void DisplayGoals()
+    private static ChecklistGoal CreateChecklistGoal(string name, string description, int points)
+    {
+        Console.WriteLine("What is the target amount for this checklist goal?");
+        int target = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("What is the bonus points for completing this goal?");
+        int bonus = Convert.ToInt32(Console.ReadLine());
+        return new ChecklistGoal(name, description, points, target, bonus);
+    }
+
+    private static void DisplayGoals()
     {
         Console.WriteLine("\nList of Goals:");
         foreach (Goal goal in goals)
@@ -111,7 +103,7 @@ public class GoalManager
         }
     }
 
-    static void RecordEvent()
+    private static void RecordEvent()
     {
         Console.WriteLine("Enter the name of the goal you completed:");
         string goalName = Console.ReadLine();
@@ -130,7 +122,7 @@ public class GoalManager
         }
     }
 
-    static void SaveGoals()
+    private static void SaveGoals()
     {
         using (StreamWriter writer = new StreamWriter("goals.txt"))
         {
@@ -146,7 +138,7 @@ public class GoalManager
         }
     }
 
-    static void LoadGoals()
+    private static void LoadGoals()
     {
         if (File.Exists("goals.txt"))
         {
@@ -170,8 +162,7 @@ public class GoalManager
                         {
                             if (goal is ChecklistGoal checklistGoal && parts.Length >= 6)
                             {
-                                checklistGoal.Target = Convert.ToInt32(parts[4]);
-                                checklistGoal.AmountCompleted = Convert.ToInt32(parts[5]);
+                                checklistGoal.SetProgress(Convert.ToInt32(parts[4]), Convert.ToInt32(parts[5]));
                             }
 
                             goals.Add(goal);
@@ -185,5 +176,6 @@ public class GoalManager
                 }
             }
         }
+
     }
 }

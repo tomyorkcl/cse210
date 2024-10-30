@@ -1,25 +1,33 @@
 public class ChecklistGoal : Goal
 {
-    public int AmountCompleted { get; set; }
-    public int Target { get; set; }
-    public int Bonus { get; set; }
+    private int amountCompleted;
+    private int target;
+    private int bonus;
+
+    public int AmountCompleted => amountCompleted;
+    public int Target => target;
+    public int Bonus => bonus;
 
     public ChecklistGoal(string name, string description, int points, int target, int bonus)
+        : base(name, description, points)
     {
-        ShortName = name;
-        Description = description;
-        Points = points;
-        Target = target;
-        Bonus = bonus;
-        AmountCompleted = 0;
+        this.target = target;
+        this.bonus = bonus;
+        amountCompleted = 0;
     }
 
     public override void MarkCompleted()
     {
-        AmountCompleted++;
-        if (AmountCompleted >= Target)
+        amountCompleted++;
+        if (amountCompleted >= target)
         {
-            Points += Bonus;
+            points += bonus;
         }
+    }
+
+    internal void SetProgress(int target, int amountCompleted)
+    {
+        this.target = target;
+        this.amountCompleted = amountCompleted;
     }
 }
